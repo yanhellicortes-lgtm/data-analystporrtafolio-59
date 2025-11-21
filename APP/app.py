@@ -2,18 +2,17 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
-# Cargar datos
+
+
 datos = pd.read_csv('data/vehicles_us.csv')
 
 st.header('Análisis de anuncios de ventas de autos')
 
-# Checkbox para mostrar datos
 tabla_check = st.checkbox('Mostrar datos')
 if tabla_check:
     st.write('EDA: tabla de datos')
     st.dataframe(datos)
 
-# Checkbox para mostrar histograma
 hist_check = st.checkbox('Mostrar histograma')
 if hist_check:
     st.write('Histograma: Distribución del odómetro de los autos en venta')
@@ -21,7 +20,6 @@ if hist_check:
     min_odo = int(datos['odometer'].min())
     max_odo = int(datos['odometer'].max())
 
-    # Slider para elegir rango
     rango = st.slider(
         'Selecciona el rango de odómetro',
         min_odo,
@@ -42,7 +40,6 @@ if hist_check:
     )
     st.plotly_chart(hist, use_container_width=True)
 
-# Checkbox para mostrar dispersión
 disp_check = st.checkbox('Mostrar gráfico de dispersión')
 if disp_check:
     st.write('Relación entre odómetro y precio')
@@ -54,3 +51,10 @@ if disp_check:
         opacity=0.5
     )
     st.plotly_chart(fig, use_container_width=True)
+
+scatter_check = st.checkbox('Mostrar gráfico de dispersión')
+
+if scatter_check:
+    st.write('Gráfico de dispersión: relación entre odómetro y precio')
+    fig2 = px.scatter(datos, x='odometer', y='price', opacity=0.5)
+    st.plotly_chart(fig2)
